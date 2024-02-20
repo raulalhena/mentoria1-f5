@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { PostsModule } from './posts/posts.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users/entities/user.entity';
+import { Post } from './posts/entities/post.entity';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { User } from './users/entities/user.entity';
       username: 'root',
       password: '1234',
       database: 'backmentoria',
-      entities: [User],
+      entities: [User, Post],
       synchronize: true,
     }),
   ],
