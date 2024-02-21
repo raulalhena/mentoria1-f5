@@ -24,4 +24,9 @@ export class UsersController {
   findOne(@Param('id') userId: number) {
     return this.usersService.findOne(userId);
   }
+
+  @Post()
+  create(@Body() createUserDto: CreateUserDto) {
+    return this.usersService.create(createUserDto);
+  }
 }

@@ -11,24 +11,12 @@ export class UsersService {
     @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
 
-  async login(email, password) {
-    try {
-      const validUser = await this.userRepository.findOneBy({ email: email, password: password });
-      if(validUser) throw new HttpException('User not valid', HttpStatus.FORBIDDEN);
-      return {
-        message: 'Welcome',
-      };
-    } catch (error) {
-      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
-    }
-  }
-
   async findAll() {
     try {
       const users = await this.userRepository.find();
       return {
         users,
-        message: 'Users retrieve successfully',
+        message: 'Users retrieved successfully',
       };
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.FORBIDDEN);
@@ -40,25 +28,19 @@ export class UsersService {
       const user = await this.userRepository.findOneBy({ id: userId });
       return {
         user,
-        message: 'User retrieve successfully',
+        message: 'User retrieved successfully',
       };
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
 
-  // create() {
-  //   this.userRepository.save({
-  //     name: 'Leo',
-  //     email: 'leo@email.com',
-  //   });
-  // }
-
-  update(){
-
-  }
-
-  delete() {
-
+  async create(createUserDto: CreateUserDto) {
+    try {
+      const newUser = await this.userRepository.save(createUserDto);
+      return newUser;
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
   }
 }
